@@ -1,4 +1,3 @@
-const processData = require("./processData")
 const tf = require("@tensorflow/tfjs")
 
 const ACTIVITY_LABEL_MAPPING = {
