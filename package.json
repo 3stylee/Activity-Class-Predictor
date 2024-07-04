@@ -1,0 +1,16 @@
+{
+	"name": "activity-class-predictor",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"author": "lewis watt",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.19.2",
+		"@tensorflow/tfjs-node": "^3.8.0"
+	}
+}
