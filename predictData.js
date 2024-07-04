@@ -18,17 +18,15 @@ const ACTIVITY_LABEL_MAPPING = {
  */
 const predictData = async (data) => {
 	const results = []
-	const processedData = processData(data)
 	const model = await tf.loadLayersModel(
 		"https://raw.githubusercontent.com/3stylee/Track-it/master/src/constants/tfjs_model/model.json"
 	)
 
-	for (let i = 0; i < processedData.length; i++) {
-		const row = processedData[i]
-		if (data[i].type !== "Run") {
-			results.push(data[i].type)
+	for (row in data) {
+		if (row[6] !== "Run") {
+			results.push(row[6])
 		} else {
-			const tensorData = tf.tensor2d([row])
+			const tensorData = tf.tensor2d([row.slice(0, 5)])
 			const prediction = model.predict(tensorData)
 			const predictedClassIndex = prediction.argMax(1).dataSync()[0]
 			results.push(ACTIVITY_LABEL_MAPPING[predictedClassIndex])
