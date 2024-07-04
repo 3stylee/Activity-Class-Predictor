@@ -3,13 +3,6 @@ const MODEL_SCALER_INFO = {
 	data_max: [18347.5, 4900.0, 436.0, 8.948, 12.0, 116.0],
 }
 
-/**
- * Processes an array of predictors and scales them into normalised predictors.
- *
- * @param {Array}data - the raw predictors to process.
- *
- * @returns {Array} the normalised predictors.
- */
 const processData = (data) => {
 	const processedData = data.map((row) => {
 		return scaleRow([
@@ -24,13 +17,6 @@ const processData = (data) => {
 	return processedData
 }
 
-/**
- * Processes an array of raw predictors and scales them into normalised predictors.
- *
- * @param {Array}row - the raw predictors to process.
- *
- * @returns {Array} the normalised predictors.
- */
 const scaleRow = (row) => {
 	const scaledRow = row.map((value, index) => {
 		const dataMin = MODEL_SCALER_INFO.data_min[index]
@@ -44,7 +30,4 @@ const scaleRow = (row) => {
 	return scaledRow
 }
 
-module.exports = {
-	processData,
-	scaleRow,
-}
+module.exports = processData
