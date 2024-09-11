@@ -60,7 +60,7 @@ const predictData = async (data, id, admin) => {
 
 	for (const row of data) {
 		if (row[6] !== "Run") {
-			results.push(row[6])
+			results.push("X-train")
 		} else {
 			row.pop()
 			const tensorData = tf.tensor2d([row])
