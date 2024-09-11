@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-const predictData = require("./predictData")
+const { predictData, refineUserModel } = require("./predictionModel")
 require("dotenv").config()
 
 // Import firebase-admin and initialize the app
@@ -26,9 +26,7 @@ const getToken = (req) => {
 	return { id, token }
 }
 
-const validateToken = async (req) => {
-	const { id, token } = getToken(req)
-	console.log(id, token)
+const validateToken = async (id, token) => {
 	if (!id || !token) return false
 
 	const userRef = admin.firestore().collection("users").doc(id)
@@ -46,15 +44,30 @@ const validateToken = async (req) => {
 
 // Define the /predict route
 app.post("/predict", async (req, res) => {
-	const validToken = await validateToken(req)
+	const { id, token } = getToken(req)
+	const validToken = await validateToken(id, token)
 	if (!validToken) {
 		res.status(401).json({ message: "Unauthorized" })
 		return
 	}
 
 	const inputData = req.body
-	const predictionResult = await predictData(inputData)
+	const predictionResult = await predictData(inputData, id, admin)
 	res.json(predictionResult)
+})
+
+// Define the /refine route
+app.post("/refine", async (req, res) => {
+	const { id, token } = getToken(req)
+	const validToken = await validateToken(id, token)
+	if (!validToken) {
+		res.status(401).json({ message: "Unauthorized" })
+		return
+	}
+
+	const inputData = req.body
+	const status = await refineUserModel(inputData, id, admin)
+	res.status(status === "Model updated successfully" ? 200 : 400).json({ message: status })
 })
 
 // Start the server

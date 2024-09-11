@@ -1,6 +1,6 @@
 POST http://localhost:8080/predict 
 content-type: application/json
-Authorization: Bearer 7d5e59e9d6183aeddd4a2eb96f53a7716203026e
+Authorization: Bearer b77bd79bc429a843433635020d5f6301612aa3a1
 id: 32632334
 
 [
